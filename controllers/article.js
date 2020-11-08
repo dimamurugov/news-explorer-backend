@@ -2,6 +2,7 @@
 const Article = require('../models/article');
 const NotFoundError = require('../errors/not-found-err');
 const NotRequestError = require('../errors/not-request-err');
+const NotRulesError = require('../errors/not-rules-err');
 
 module.exports.getArticles = (req, res, next) => {
   Article.find({ owner: req.user._id })
@@ -42,15 +43,23 @@ module.exports.createArticle = (req, res, next) => {
 };
 
 module.exports.deleteArticle = (req, res, next) => {
-  Article.findByIdAndRemove(req.params.id)
-    .orFail(() => {
-      throw new NotFoundError('не найдена статья с таким id');
+  Article.findById(req.params.id)
+    .select('owner')
+    .then((article) => {
+      if (article.owner !== req.user._id) {
+        throw new NotRulesError('Нет прав доступа');
+      }
+
+      return Article.findByIdAndRemove(req.params.id)
+        .orFail(() => {
+          throw new NotFoundError('не найдена статья с таким id');
+        })
+        .then((dataArticle) => res.send({ data: dataArticle }))
+        .catch((err) => {
+          next(err);
+        })
+        .catch(next);
     })
-    .then((dataArticle) => res.send({ data: dataArticle }))
-    .catch((err) => {
-      next(err);
-    })
-    .catch(next)
     .catch((err) => {
       if (err.name === 'CastError') {
         throw new NotRequestError('Не валидный id статья');
