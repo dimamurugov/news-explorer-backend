@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const Article = require('../models/article');
 const NotFoundError = require('../errors/not-found-err');
 const NotRequestError = require('../errors/not-request-err');

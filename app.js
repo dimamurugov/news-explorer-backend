@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
 require('dotenv').config();
@@ -57,7 +56,7 @@ app.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   res
     .status(err.statusCode)
