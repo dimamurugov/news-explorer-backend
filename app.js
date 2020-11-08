@@ -7,16 +7,11 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-
-const limiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 3,
-});
 
 const { login, createUser } = require('./controllers/user');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/not-found-err');
+const { limiter } = require('./middlewares/reteLimit');
 
 const app = express();
 
@@ -28,7 +23,7 @@ const { PORT = 3000 } = process.env;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
-// app.use(limiter);
+app.use(limiter);
 
 mongoose.connect('mongodb://localhost:27017/newsdb', {
   useNewUrlParser: true,
