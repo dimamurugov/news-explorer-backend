@@ -1,5 +1,5 @@
 # news-explorer-backend
-# v0.0.1
+# v0.0.2
 
 ## Доступ к проекту:
 
