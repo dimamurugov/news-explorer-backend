@@ -2,6 +2,7 @@ const { errors } = require('celebrate');
 const { celebrate, Joi } = require('celebrate');
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -13,6 +14,7 @@ const NotFoundError = require('./errors/not-found-err');
 const { limiter } = require('./middlewares/reteLimit');
 
 const app = express();
+app.use(cors());
 
 app.use(requestLogger);
 
