@@ -14,7 +14,24 @@ const NotFoundError = require('./errors/not-found-err');
 const { limiter } = require('./middlewares/reteLimit');
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: [
+    'http://localhost:8080',
+    'http://api.murnews.students.nomoreparties.xyz',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: [
+    'Content-Type',
+    'origin',
+    'x-access-token',
+  ],
+  credentials: true,
+};
+
+app.use('*', cors(corsOptions));
 
 app.use(requestLogger);
 
