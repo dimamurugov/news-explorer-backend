@@ -20,7 +20,12 @@ module.exports.login = (req, res, next) => {
         httpOnly: true,
         sameSite: true,
       });
-      res.status(200).send({ message: 'Авторизация прошла успешно!' })
+      res.status(200).send({
+        name: user.name,
+        email: user.email,
+        id: user._id,
+        message: 'Авторизация прошла успешно!',
+      })
         .end();
     })
     .catch(() => {
