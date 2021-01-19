@@ -18,10 +18,6 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:8080',
-    'https://explorer-news.ml',
-    'https://www.explorer-news.ml',
-    'http://explorer-news.ml',
-    'http://www.explorer-news.ml',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
@@ -29,6 +25,7 @@ const corsOptions = {
   allowedHeaders: [
     'Content-Type',
     'origin',
+    'Authorization',
     'x-access-token',
   ],
   credentials: true,
@@ -52,6 +49,7 @@ mongoose.connect('mongodb://localhost:27017/newsdb', {
 });
 
 app.use('*', cors(corsOptions));
+
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().pattern(/([\w-]\.?)+@([\w-]\.?)+\.\w{2,}/),
