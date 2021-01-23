@@ -27,6 +27,7 @@ const corsOptions = {
     'origin',
     'Authorization',
     'x-access-token',
+    'accept',
   ],
   credentials: true,
 };
@@ -38,6 +39,7 @@ const { PORT = 3000 } = process.env;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(helmet());
 app.use(limiter);
 
@@ -56,6 +58,7 @@ app.post('/signin', celebrate({
     password: Joi.string().required().min(8).max(30),
   }),
 }), login);
+
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),

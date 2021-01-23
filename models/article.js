@@ -25,6 +25,7 @@ const articleSchema = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+    unique: true,
     validate: {
       validator: (avatar) => validator.isURL(avatar),
       message: 'Не валидный адресс пользователя',

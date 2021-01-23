@@ -19,7 +19,6 @@ module.exports.createArticle = (req, res, next) => {
     link,
     image,
   } = req.body;
-
   Article.create({
     keyword,
     title,
