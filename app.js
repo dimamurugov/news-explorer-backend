@@ -18,6 +18,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:8080',
+    'https://dimamurugov.github.io/news-explorer-frontend/',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
   preflightContinue: false,
